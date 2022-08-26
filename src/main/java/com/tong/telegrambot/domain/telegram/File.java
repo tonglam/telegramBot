@@ -1,5 +1,6 @@
 package com.tong.telegrambot.domain.telegram;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.checkerframework.checker.units.qual.A;
@@ -13,9 +14,13 @@ import org.checkerframework.checker.units.qual.A;
 @Accessors(chain = true)
 public class File {
 
+    @JsonProperty("file_id")
     private String fileId; // Identifier for this file, which can be used to download or reuse the file
+    @JsonProperty("file_unique_id")
     private String fileUniqueId; // Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+    @JsonProperty("file_size")
     private Integer fileSize; // Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+    @JsonProperty("file_path")
     private String filePath; // Optional. File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file.
 
 }

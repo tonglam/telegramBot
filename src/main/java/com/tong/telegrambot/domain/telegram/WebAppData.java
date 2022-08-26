@@ -1,5 +1,6 @@
 package com.tong.telegrambot.domain.telegram;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,6 +14,7 @@ import lombok.experimental.Accessors;
 public class WebAppData {
 
     private String data; // The data. Be aware that a bad client can send arbitrary data in this field.
+    @JsonProperty("button_text")
     private String buttonText; // Text of the web_app keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field.
 
 }

@@ -1,5 +1,6 @@
 package com.tong.telegrambot.domain.telegram;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -18,6 +19,7 @@ public class MessageEntity {
     private String url; // Optional. For “text_link” only, URL that will be opened after user taps on the text
     private User user; // Optional. For “text_mention” only, the mentioned user
     private String language; // Optional. For “pre” only, the programming language of the entity text
+    @JsonProperty("message_id")
     private String customEmojiId; // Optional. For “custom_emoji” only, unique identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker
 
 }

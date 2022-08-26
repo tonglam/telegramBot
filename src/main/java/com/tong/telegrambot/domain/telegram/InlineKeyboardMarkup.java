@@ -1,5 +1,6 @@
 package com.tong.telegrambot.domain.telegram;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class InlineKeyboardMarkup {
 
+    @JsonProperty("inline_keyboard")
     private List<InlineKeyboardButton> inlineKeyboard; // Array of button rows, each represented by an Array of InlineKeyboardButton objects
 
 }

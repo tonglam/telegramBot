@@ -1,5 +1,6 @@
 package com.tong.telegrambot.domain.telegram;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -10,6 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class MessageAutoDeleteTimerChanged {
 
+    @JsonProperty("message_id")
     private Integer messageAutoDeleteTime; // New auto-delete time for messages in the chat; in seconds
 
 }

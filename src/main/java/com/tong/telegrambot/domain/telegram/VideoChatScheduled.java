@@ -1,5 +1,6 @@
 package com.tong.telegrambot.domain.telegram;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,6 +13,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class VideoChatScheduled {
 
+    @JsonProperty("start_date")
     private Integer startDate; // Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator
 
 }
