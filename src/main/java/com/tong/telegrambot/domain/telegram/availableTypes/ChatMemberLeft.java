@@ -12,7 +12,6 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Setter
-@Accessors
 public class ChatMemberLeft extends ChatMember {
 
     private String status; // The member's status in the chat, always “left”

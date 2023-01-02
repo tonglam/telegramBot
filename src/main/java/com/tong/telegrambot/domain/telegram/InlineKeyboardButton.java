@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tong.telegrambot.domain.telegram.games.CallbackGame;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.telegram.telegrambots.meta.api.objects.webapp.WebAppInfo;
 
 /**
  * This object represents one button of an inline keyboard. You must use exactly one of the optional fields.

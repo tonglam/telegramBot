@@ -2,9 +2,10 @@ package com.tong.telegrambot.domain.telegram.stickers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tong.telegrambot.domain.telegram.InlineKeyboardMarkup;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.

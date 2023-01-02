@@ -1,9 +1,10 @@
 package com.tong.telegrambot.domain.telegram.stickers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by tong on 2022/08/25

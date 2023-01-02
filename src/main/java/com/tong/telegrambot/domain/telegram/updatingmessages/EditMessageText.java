@@ -3,10 +3,10 @@ package com.tong.telegrambot.domain.telegram.updatingmessages;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tong.telegrambot.domain.telegram.InlineKeyboardMarkup;
 import com.tong.telegrambot.domain.telegram.MessageEntity;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**

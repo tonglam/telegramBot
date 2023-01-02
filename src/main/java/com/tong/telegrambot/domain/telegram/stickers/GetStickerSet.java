@@ -1,8 +1,9 @@
 package com.tong.telegrambot.domain.telegram.stickers;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Use this method to get a sticker set. On success, a StickerSet object is returned.

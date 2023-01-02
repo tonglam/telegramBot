@@ -1,8 +1,9 @@
 package com.tong.telegrambot.domain.telegram.stickers;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Use this method to delete a sticker from a set created by the bot. Returns True on success.

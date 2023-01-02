@@ -1,9 +1,11 @@
 package com.tong.telegrambot.domain.telegram.inlineMode;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Use this method to send answers to an inline query. On success, True is returned.
