@@ -5,6 +5,8 @@ package com.tong.telegramBot.service;
  */
 public interface INotificationService {
 
+    void notification(String text, String user);
+
     void playerValueNotification();
 
 }

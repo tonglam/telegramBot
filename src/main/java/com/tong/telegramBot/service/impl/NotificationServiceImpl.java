@@ -29,14 +29,22 @@ import java.util.Optional;
 public class NotificationServiceImpl implements INotificationService {
 
     private final InterfaceServiceImpl interfaceService;
-    private final ILetletmeBotCommandService letletmeBotCommandService;
 
     private LetletmeBot bot;
-    private final List<String> notificationUsers = Lists.newArrayList("tonglam14", "让让我");
+    private final List<String> notificationUsers = Lists.newArrayList("tonglam14");
 
     @PostConstruct
     private void init() {
-        bot = new LetletmeBot(letletmeBotCommandService);
+        bot = new LetletmeBot();
+    }
+
+    @Override
+    public void notification(String text, String user) {
+        UserInfoData userInfo = RedisUtils.readHashValue(Constant.BOT_USER_INFO_KEY, user);
+        if (userInfo == null) {
+            return;
+        }
+        this.bot.sendNotification(text, userInfo);
     }
 
     @Override
@@ -52,11 +60,10 @@ public class NotificationServiceImpl implements INotificationService {
                 return;
             }
             String text = CommonUtils.initPlayerValueData(s);
-            UserInfoData userInfo = RedisUtils.readHashValue(Constant.BOT_USER_INFO_KEY, user);
-            if (userInfo == null) {
+            if (StringUtils.isEmpty(text)) {
                 return;
             }
-            this.bot.sendNotification(text, userInfo);
+            this.notification(text, user);
             RedisUtils.setHashValue(key, hashKey, s);
         }));
     }

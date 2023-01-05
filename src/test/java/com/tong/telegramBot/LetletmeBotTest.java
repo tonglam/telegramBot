@@ -34,7 +34,7 @@ public class LetletmeBotTest extends TelegramBotApplicationTests {
     @CsvSource({"test notification, tonglam14"})
     void test(String text, String username) {
         UserInfoData userInfoData = RedisUtils.readHashValue(Constant.BOT_USER_INFO_KEY, username);
-        LetletmeBot bot = new LetletmeBot(letletmeBotService);
+        LetletmeBot bot = new LetletmeBot();
         bot.sendNotification(text, userInfoData);
     }
 

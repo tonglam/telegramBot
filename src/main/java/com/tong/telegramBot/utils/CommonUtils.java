@@ -65,17 +65,14 @@ public class CommonUtils {
     public static String initPlayerValueData(String result) {
         StringBuilder builder = new StringBuilder();
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern(Constant.SHORTDAY));
-        builder.append("Price_change: ").append(date).append("\r\n").append("\r\n");
         String rise = "Rise";
         String fall = "Faller";
         Map<String, List<LinkedHashMap<String, Object>>> map = JsonUtils.json2obj(result, Map.class);
         if (CollectionUtils.isEmpty(map)) {
-            builder.append("Rise:").append("\r\n").append("None").append("\r\n");
-            builder.append("\r\n");
-            builder.append("Fall:").append("\r\n").append("None").append("\r\n");
-            return builder.toString();
+            return null;
         }
         // rise
+        builder.append("Price_change: ").append(date).append("\r\n").append("\r\n");
         builder.append("Rise:").append("\r\n");
         if (!map.containsKey(rise) || CollectionUtils.isEmpty(map.get(rise))) {
             builder.append("None").append("\r\n");

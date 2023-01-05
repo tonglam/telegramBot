@@ -3,7 +3,6 @@ package com.tong.telegramBot.bot;
 import com.google.common.base.CaseFormat;
 import com.tong.telegramBot.constant.Constant;
 import com.tong.telegramBot.domain.bot.letletme.UserInfoData;
-import com.tong.telegramBot.service.ILetletmeBotCommandService;
 import com.tong.telegramBot.utils.CommonUtils;
 import com.tong.telegramBot.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +21,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class LetletmeBot extends TelegramLongPollingBot {
-
-    private final ILetletmeBotCommandService letletmeBotService;
 
     @Override
     public String getBotUsername() {
@@ -74,7 +71,7 @@ public class LetletmeBot extends TelegramLongPollingBot {
         UserInfoData userInfoData = new UserInfoData()
                 .setChatId(chat.getId())
                 .setType(chat.getType());
-        if (StringUtils.equals("supergroup", chat.getType())) {
+        if (StringUtils.equals("supergroup", chat.getType()) || StringUtils.equals("group", chat.getType())) {
             userInfoData
                     .setTitle(chat.getTitle())
                     .setHashKey(chat.getTitle());

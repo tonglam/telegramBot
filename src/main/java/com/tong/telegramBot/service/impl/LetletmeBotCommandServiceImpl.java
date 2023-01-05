@@ -6,14 +6,16 @@ import com.tong.telegramBot.utils.CommonUtils;
 import com.tong.telegramBot.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -31,7 +33,16 @@ public class LetletmeBotCommandServiceImpl implements ILetletmeBotCommandService
     public String priceChange() {
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern(Constant.SHORTDAY));
         Optional<String> result = this.interfaceService.qryPlayerValueByDate(date);
-        return result.map(CommonUtils::initPlayerValueData).orElse("");
+        if (result.isPresent()) {
+            String text = CommonUtils.initPlayerValueData(result.get());
+            if (StringUtils.isEmpty(text)) {
+                return "Price_change: " + date + "\r\n" + "\r\n" +
+                        "Rise:" + "\r\n" + "None" + "\r\n" +
+                        "\r\n" +
+                        "Fall:" + "\r\n" + "None" + "\r\n";
+            }
+        }
+        return "";
     }
 
     @Override
