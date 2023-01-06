@@ -62,6 +62,7 @@ public class CommonUtils {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     public static String initPlayerValueData(String result) {
         StringBuilder builder = new StringBuilder();
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern(Constant.SHORTDAY));

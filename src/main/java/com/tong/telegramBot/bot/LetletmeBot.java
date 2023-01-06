@@ -2,25 +2,31 @@ package com.tong.telegramBot.bot;
 
 import com.google.common.base.CaseFormat;
 import com.tong.telegramBot.constant.Constant;
-import com.tong.telegramBot.domain.bot.letletme.UserInfoData;
+import com.tong.telegramBot.constant.SpecialCommandType;
+import com.tong.telegramBot.domain.bot.common.NoticeData;
+import com.tong.telegramBot.domain.bot.letletme.HermesNoticeData;
+import com.tong.telegramBot.domain.bot.common.UserInfoData;
+import com.tong.telegramBot.service.ILetletmeBotCommandService;
 import com.tong.telegramBot.utils.CommonUtils;
 import com.tong.telegramBot.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.springframework.util.CollectionUtils;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.List;
 
 /**
  * Create by tong on 2023/1/2
  */
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class LetletmeBot extends TelegramLongPollingBot {
+public class LetletmeBot extends BaseBot {
+
+    private final ILetletmeBotCommandService letletmeBotCommandService;
 
     @Override
     public String getBotUsername() {
@@ -39,26 +45,33 @@ public class LetletmeBot extends TelegramLongPollingBot {
         if (StringUtils.isBlank(text)) {
             return;
         }
+        Object result = null;
         boolean isCommand = false;
         if (text.contains("/")) {
             isCommand = true;
         }
-        SendMessage message = new SendMessage();
         if (isCommand) {
-            String result = this.processCommand(text);
-            if (result == null) {
-                return;
-            }
-            message.setText(result);
+            result = this.processCommand(text);
         }
-        message.setChatId(update.getMessage().getChatId());
-        if (StringUtils.isEmpty(message.getText())) {
+        if (result == null) {
             return;
         }
-        try {
-            this.execute(message);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+        String type = this.getCommandType(StringUtils.substringAfter(text, "/"));
+        switch (type) {
+            case "message": {
+                this.sendTextNotification((String) result, update.getMessage().getChatId());
+                break;
+            }
+            case "photo": {
+                List<NoticeData> list = this.letletmeBotCommandService.hermesAll();
+                if (CollectionUtils.isEmpty(list)) {
+                    return;
+                }
+                list.forEach(o -> {
+                    this.sendImageNotification(o.getImgUrl(), o.getImgCaption(), update.getMessage().getChatId());
+                });
+                break;
+            }
         }
     }
 
@@ -68,32 +81,33 @@ public class LetletmeBot extends TelegramLongPollingBot {
         if (chat == null) {
             return;
         }
-        UserInfoData userInfoData = new UserInfoData()
-                .setChatId(chat.getId())
-                .setType(chat.getType());
+        UserInfoData userInfoData = new UserInfoData().setChatId(chat.getId()).setType(chat.getType());
         if (StringUtils.equals("supergroup", chat.getType()) || StringUtils.equals("group", chat.getType())) {
-            userInfoData
-                    .setTitle(chat.getTitle())
-                    .setHashKey(chat.getTitle());
+            userInfoData.setTitle(chat.getTitle()).setHashKey(chat.getTitle());
         } else if (StringUtils.equals("private", chat.getType())) {
-            userInfoData
-                    .setFirstName(chat.getFirstName())
-                    .setLastName(chat.getLastName())
-                    .setUserName(chat.getUserName())
-                    .setHashKey(chat.getUserName());
+            userInfoData.setFirstName(chat.getFirstName()).setLastName(chat.getLastName()).setUserName(chat.getUserName()).setHashKey(chat.getUserName());
         }
         RedisUtils.setHashValue(Constant.BOT_USER_INFO_KEY, userInfoData.getHashKey(), userInfoData);
     }
 
+    // get command type
+    private String getCommandType(String text) {
+        String type = SpecialCommandType.getSpecialCommandType(text);
+        if (StringUtils.isEmpty(type)) {
+            return "message";
+        }
+        return type;
+    }
+
     // process bot command
-    private String processCommand(String text) {
+    private Object processCommand(String text) {
         if (text.contains("@")) {
             text = StringUtils.substringBefore(text, "@");
         }
-        String result = "";
+        Object result;
         // parse command
-        String methodName = "";
-        String args = "";
+        String methodName;
+        String args;
         if (!text.contains(" ")) {
             methodName = StringUtils.substringAfter(text, "/");
             args = null;
@@ -106,17 +120,6 @@ public class LetletmeBot extends TelegramLongPollingBot {
         }
         result = CommonUtils.invokeBotCommandService(methodName, args);
         return result;
-    }
-
-    public void sendNotification(String text, UserInfoData userInfo) {
-        SendMessage message = new SendMessage();
-        message.setText(text);
-        message.setChatId(userInfo.getChatId());
-        try {
-            this.execute(message);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
     }
 
 }

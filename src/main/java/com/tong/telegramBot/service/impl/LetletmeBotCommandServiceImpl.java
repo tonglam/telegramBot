@@ -1,6 +1,9 @@
 package com.tong.telegramBot.service.impl;
 
+import com.google.common.collect.Lists;
 import com.tong.telegramBot.constant.Constant;
+import com.tong.telegramBot.domain.bot.common.NoticeData;
+import com.tong.telegramBot.domain.bot.letletme.HermesNoticeData;
 import com.tong.telegramBot.service.ILetletmeBotCommandService;
 import com.tong.telegramBot.utils.CommonUtils;
 import com.tong.telegramBot.utils.JsonUtils;
@@ -16,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -105,6 +109,24 @@ public class LetletmeBotCommandServiceImpl implements ILetletmeBotCommandService
     @Override
     public int live() {
         return 0;
+    }
+
+    @Override
+    public List<NoticeData> hermesAll() {
+        List<NoticeData> list = Lists.newArrayList();
+        this.interfaceService.queryHermesInfoList().ifPresent(result -> {
+            List<HermesNoticeData> resultList = JsonUtils.json2Collection(result, List.class, HermesNoticeData.class);
+            if (CollectionUtils.isEmpty(resultList)) {
+                return;
+            }
+            resultList.forEach(o -> {
+                NoticeData noticeData = new NoticeData()
+                        .setImgUrl(o.getImg())
+                        .setImgCaption(o.getName() + " - " + o.getPrice() + "\r\n" + o.getHref());
+                list.add(noticeData);
+            });
+        });
+        return list;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.tong.telegramBot.domain.bot.letletme;
+package com.tong.telegramBot.domain.bot.common;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

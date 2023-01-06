@@ -90,6 +90,10 @@ public class RedisUtils {
         return redisTemplate.hasKey(key) ? Optional.ofNullable(redisTemplate.opsForSet().members(key)) : Optional.empty();
     }
 
+    public static Map<Object, Object> getHashByKey(String key) {
+        return redisTemplate.opsForHash().entries(key);
+    }
+
     @Autowired
     private void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
         RedisUtils.redisTemplate = redisTemplate;

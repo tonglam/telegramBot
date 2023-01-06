@@ -44,4 +44,14 @@ public class InterfaceServiceImpl implements IInterfaceService {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<String> queryHermesInfoList() {
+        try {
+            return HttpUtils.httpGet(Constant.HERMES_GET_ALL);
+        } catch (IOException e) {
+            log.error("httpGet error:" + e.getMessage());
+        }
+        return Optional.empty();
+    }
+
 }

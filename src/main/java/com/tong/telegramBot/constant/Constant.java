@@ -21,4 +21,9 @@ public class Constant {
     public static final String FPL_PLAYER_VALUE_BY_DATE = FPL_PREFIX + "stat/qryPlayerValueByDate?date=%s";
     public static final String FPL_CURRENT_EVENT_AND_NEXT_UTC_DEADLINE = FPL_PREFIX + "common/qryCurrentEventAndNextUtcDeadline";
 
+    // hermes
+    public static final String HERMES_KEY = "hermes_bags";
+    private static final String HERMES_PREFIX = "https://letletme.top/notice/hermes/";
+    public static final String HERMES_GET_ALL = HERMES_PREFIX + "queryHermesInfoList";
+
 }
