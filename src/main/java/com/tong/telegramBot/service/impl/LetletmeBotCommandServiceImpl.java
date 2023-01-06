@@ -120,9 +120,13 @@ public class LetletmeBotCommandServiceImpl implements ILetletmeBotCommandService
                 return;
             }
             resultList.forEach(o -> {
+                String caption = o.getName() + " - " + o.getPrice() + "\r\n" + o.getHref();
+                if (o.isNewEntry()) {
+                    caption = "[NEW]" + caption;
+                }
                 NoticeData noticeData = new NoticeData()
                         .setImgUrl(o.getImg())
-                        .setImgCaption(o.getName() + " - " + o.getPrice() + "\r\n" + o.getHref());
+                        .setImgCaption(caption);
                 list.add(noticeData);
             });
         });

@@ -4,7 +4,6 @@ import com.google.common.base.CaseFormat;
 import com.tong.telegramBot.constant.Constant;
 import com.tong.telegramBot.constant.SpecialCommandType;
 import com.tong.telegramBot.domain.bot.common.NoticeData;
-import com.tong.telegramBot.domain.bot.letletme.HermesNoticeData;
 import com.tong.telegramBot.domain.bot.common.UserInfoData;
 import com.tong.telegramBot.service.ILetletmeBotCommandService;
 import com.tong.telegramBot.utils.CommonUtils;
@@ -67,9 +66,7 @@ public class LetletmeBot extends BaseBot {
                 if (CollectionUtils.isEmpty(list)) {
                     return;
                 }
-                list.forEach(o -> {
-                    this.sendImageNotification(o.getImgUrl(), o.getImgCaption(), update.getMessage().getChatId());
-                });
+                list.forEach(o -> this.sendImageNotification(o.getImgUrl(), o.getImgCaption(), update.getMessage().getChatId()));
                 break;
             }
         }

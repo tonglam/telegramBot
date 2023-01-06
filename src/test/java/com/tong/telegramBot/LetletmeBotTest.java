@@ -3,7 +3,6 @@ package com.tong.telegramBot;
 import com.tong.telegramBot.bot.LetletmeBot;
 import com.tong.telegramBot.constant.Constant;
 import com.tong.telegramBot.domain.bot.common.NoticeData;
-import com.tong.telegramBot.domain.bot.letletme.HermesNoticeData;
 import com.tong.telegramBot.domain.bot.common.UserInfoData;
 import com.tong.telegramBot.service.ILetletmeBotCommandService;
 import com.tong.telegramBot.utils.RedisUtils;
