@@ -47,4 +47,11 @@ public class LetletmeBotTest extends TelegramBotApplicationTests {
         System.out.println(1);
     }
 
+    @ParameterizedTest
+    @CsvSource({"7802"})
+    void live(String entryStr) {
+        String a = this.letletmeBotService.live(entryStr);
+        System.out.println(1);
+    }
+
 }

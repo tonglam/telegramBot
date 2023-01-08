@@ -2,20 +2,13 @@ package com.tong.telegramBot.utils;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ReflectUtil;
-import com.tong.telegramBot.constant.Constant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Method;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Create by tong on 2023/1/2
@@ -60,47 +53,6 @@ public class CommonUtils {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static String initPlayerValueData(String result) {
-        StringBuilder builder = new StringBuilder();
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern(Constant.SHORTDAY));
-        String rise = "Rise";
-        String fall = "Faller";
-        Map<String, List<LinkedHashMap<String, Object>>> map = JsonUtils.json2obj(result, Map.class);
-        if (CollectionUtils.isEmpty(map)) {
-            return null;
-        }
-        // rise
-        builder.append("Price_change: ").append(date).append("\r\n").append("\r\n");
-        builder.append("Rise:").append("\r\n");
-        if (!map.containsKey(rise) || CollectionUtils.isEmpty(map.get(rise))) {
-            builder.append("None").append("\r\n");
-        } else {
-            map.get(rise).forEach(o ->
-                    builder.append(o.get("webName"))
-                            .append(" [").append(o.get("teamShortName")).append("]")
-                            .append("  ")
-                            .append(o.get("lastValue")).append("m").append(" => ").append(o.get("value")).append("m")
-                            .append("\r\n")
-            );
-        }
-        builder.append("\r\n");
-        // fall
-        builder.append("Fall:").append("\r\n");
-        if (!map.containsKey(fall) || CollectionUtils.isEmpty(map.get(fall))) {
-            builder.append("None").append("\r\n");
-        } else {
-            map.get(fall).forEach(o ->
-                    builder.append(o.get("webName"))
-                            .append(" [").append(o.get("teamShortName")).append("]")
-                            .append("  ")
-                            .append(o.get("lastValue")).append("m").append(" => ").append(o.get("value")).append("m")
-                            .append("\r\n")
-            );
-        }
-        return builder.toString();
     }
 
     @Autowired

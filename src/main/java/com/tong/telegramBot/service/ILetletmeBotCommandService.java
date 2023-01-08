@@ -1,7 +1,6 @@
 package com.tong.telegramBot.service;
 
 import com.tong.telegramBot.domain.bot.common.NoticeData;
-import com.tong.telegramBot.domain.bot.letletme.HermesNoticeData;
 
 import java.util.List;
 
@@ -14,7 +13,9 @@ public interface ILetletmeBotCommandService {
 
     String ddl();
 
-    int live();
+    String live();
+
+    String live(String entryStr);
 
     List<NoticeData> hermesAll();
 

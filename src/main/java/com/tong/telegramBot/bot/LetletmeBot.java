@@ -58,7 +58,11 @@ public class LetletmeBot extends BaseBot {
         String type = this.getCommandType(StringUtils.substringAfter(text, "/"));
         switch (type) {
             case "message": {
-                this.sendTextNotification((String) result, update.getMessage().getChatId());
+                String message = (String) result;
+                if (StringUtils.isEmpty(message)) {
+                    return;
+                }
+                this.sendTextNotification(message, update.getMessage().getChatId());
                 break;
             }
             case "photo": {
