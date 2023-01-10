@@ -14,15 +14,15 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 @SpringBootApplication
 public class TelegramBotApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TelegramBotApplication.class, args);
-		try {
-			TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-			ILetletmeBotCommandService letletmeBotService = app.getBean(ILetletmeBotCommandService.class);
-			botsApi.registerBot(new LetletmeBot(letletmeBotService));
-		} catch (TelegramApiException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static void main(String[] args) {
+        ConfigurableApplicationContext app = SpringApplication.run(TelegramBotApplication.class, args);
+        try {
+            TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+            ILetletmeBotCommandService letletmeBotService = app.getBean(ILetletmeBotCommandService.class);
+            botsApi.registerBot(new LetletmeBot(letletmeBotService));
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
