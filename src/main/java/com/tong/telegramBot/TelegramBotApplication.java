@@ -15,7 +15,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 public class TelegramBotApplication {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext app = SpringApplication.run(TelegramBotApplication.class, args);
+		SpringApplication.run(TelegramBotApplication.class, args);
 		try {
 			TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
 			botsApi.registerBot(new LetletmeBot());
