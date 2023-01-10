@@ -1,5 +1,6 @@
 package com.tong.telegramBot;
 
+import com.google.common.collect.Lists;
 import com.tong.telegramBot.service.INotificationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,8 +17,15 @@ public class NotificationTest extends TelegramBotApplicationTests {
 
     @ParameterizedTest
     @CsvSource({"TIME FOR PIZZA, 轮子"})
-    void notification(String text, String user) {
-        this.notificationService.notification(text, user);
+    void textNotification(String text, String user) {
+        this.notificationService.textNotification(text, Lists.newArrayList(user));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"https://en.wikipedia.org/wiki/Pizza#/media/File:Eq_it-na_pizza-margherita_sep2005_sml.jpg, 轮子"})
+    void imageNotification(String url, String user) {
+        String caption = "TIME FOR PIZZA";
+        this.notificationService.imageNotification(url, caption, Lists.newArrayList(user));
     }
 
     @Test

@@ -41,6 +41,21 @@ public class InterfaceServiceImpl implements IInterfaceService {
 
     @Override
     public Optional<String> calcLivePointsByEntry(int event, int entry) {
+        try {
+            return HttpUtils.httpGet(String.format(Constant.FPL_LIVE_ENTRY_POINTS, event, entry));
+        } catch (IOException e) {
+            log.error("httpGet error:" + e.getMessage());
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<String> queryHermesInfoList() {
+        try {
+            return HttpUtils.httpGet(Constant.HERMES_GET_ALL);
+        } catch (IOException e) {
+            log.error("httpGet error:" + e.getMessage());
+        }
         return Optional.empty();
     }
 

@@ -11,6 +11,8 @@ public interface IInterfaceService {
 
     Optional<String> qryCurrentEventAndNextUtcDeadline();
 
-    Optional<String> calcLivePointsByEntry(int event,int entry);
+    Optional<String> calcLivePointsByEntry(int event, int entry);
+
+    Optional<String> queryHermesInfoList();
 
 }

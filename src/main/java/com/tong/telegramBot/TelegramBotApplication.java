@@ -18,7 +18,8 @@ public class TelegramBotApplication {
 		SpringApplication.run(TelegramBotApplication.class, args);
 		try {
 			TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-			botsApi.registerBot(new LetletmeBot());
+			ILetletmeBotCommandService letletmeBotService = app.getBean(ILetletmeBotCommandService.class);
+			botsApi.registerBot(new LetletmeBot(letletmeBotService));
 		} catch (TelegramApiException e) {
 			throw new RuntimeException(e);
 		}
