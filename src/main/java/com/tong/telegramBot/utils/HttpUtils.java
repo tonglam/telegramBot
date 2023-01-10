@@ -2,7 +2,10 @@ package com.tong.telegramBot.utils;
 
 import okhttp3.*;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.Optional;
 
 /**
@@ -10,7 +13,13 @@ import java.util.Optional;
  */
 public class HttpUtils {
 
-    private static final OkHttpClient client = new OkHttpClient();
+    private static OkHttpClient client;
+
+    @PostConstruct
+    static void setClient() {
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("119.8.105.33", 8089));
+        client = new OkHttpClient().newBuilder().proxy(proxy).build();
+    }
 
     public static Optional<String> httpGet(String url) throws IOException {
         Request request = new Request.Builder()
